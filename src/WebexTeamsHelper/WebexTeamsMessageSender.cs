@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,11 +8,8 @@ namespace WebexTeamsHelper
     {
         public async Task<bool> SendAsync(string webhookUri, string payload)
         {
-            if (string.IsNullOrWhiteSpace(webhookUri))
-                throw new ArgumentException("Webhook uri must be populated");
-
-            if (string.IsNullOrWhiteSpace(payload))
-                throw new ArgumentException("Payload must be populated");
+            ParameterValidator.IsPopulated(webhookUri, "Webhook uri");
+            ParameterValidator.IsPopulated(payload, "Payload");
 
             using (var client = new HttpClient())
             {

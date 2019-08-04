@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-
-namespace WebexTeamsHelper
+﻿namespace WebexTeamsHelper
 {
-
     public static class WebexTeamsMessageSenderExtensions
     {
         public static bool Send(this IWebexTeamsMessageSender webexTeamsMessageSender, string webhookUri, string payload)

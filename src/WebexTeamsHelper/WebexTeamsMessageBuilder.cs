@@ -22,11 +22,14 @@ namespace WebexTeamsHelper
 
         public WebexTeamsMessageBuilder AddQuote(string quote)
         {
+            ParameterValidator.IsPopulated(quote, "Quote");
             return AddLine("> " + quote);
         }
 
         public WebexTeamsMessageBuilder AddHeading(string heading, bool additionalLineBreak = true)
         {
+            ParameterValidator.IsPopulated(heading, "Heading");
+
             _lines.Add(WebexTeamsFormatting.Bold(heading));
 
             if (additionalLineBreak)
@@ -43,6 +46,8 @@ namespace WebexTeamsHelper
 
         public WebexTeamsMessageBuilder AddCodeBlock(params string[] codeLines)
         {
+            ParameterValidator.IsPopulated(codeLines, "Code block");
+
             if (codeLines?.Any() != true)
                 return this;
 
@@ -54,6 +59,8 @@ namespace WebexTeamsHelper
 
         public WebexTeamsMessageBuilder AddMention(string userEmail, string nickName = null)
         {
+            ParameterValidator.IsPopulated(userEmail, "Mention email");
+
             var mentionLine = GenerateUserMentionLine(userEmail, nickName);
             _lines.Add(mentionLine);
             return this;
@@ -67,6 +74,8 @@ namespace WebexTeamsHelper
 
         public WebexTeamsMessageBuilder AddMentionMany(IDictionary<string, string> users)
         {
+            ParameterValidator.IsPopulated(users.Values, "Mention users");
+
             var mentions = users.Select(x => GenerateUserMentionLine(x.Key, x.Value));
             var line = string.Join(", ", mentions);
             _lines.Add(line);
@@ -75,6 +84,8 @@ namespace WebexTeamsHelper
 
         public WebexTeamsMessageBuilder AddLink(string link, string display = null)
         {
+            ParameterValidator.IsPopulated(link, "Link");
+
             if (string.IsNullOrWhiteSpace(display))
                 _lines.Add(link);
             else
@@ -85,12 +96,16 @@ namespace WebexTeamsHelper
 
         public string Build()
         {
+            ParameterValidator.IsPopulated(_lines, "Lines");
+
             var markdown = string.Join(_lineBreak, _lines);
             return JsonConvert.SerializeObject(new { markdown = markdown });
         }
 
         private WebexTeamsMessageBuilder AddList(string prompt, string[] items, Func<string, string> func)
         {
+            ParameterValidator.IsPopulated(items?.Where(x => !string.IsNullOrWhiteSpace(x)), "Items");
+
             if (!string.IsNullOrWhiteSpace(prompt))
                 AddLine(prompt);
 
@@ -101,6 +116,8 @@ namespace WebexTeamsHelper
 
         private string GenerateUserMentionLine(string userName, string nickName)
         {
+            ParameterValidator.IsPopulated(userName, "User name");
+
             var displayName = string.IsNullOrWhiteSpace(nickName) ? userName : nickName;
             return $"<@personEmail:{userName}|{displayName}>";
         }
