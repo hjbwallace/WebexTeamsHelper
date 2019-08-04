@@ -17,5 +17,11 @@ namespace WebexTeamsHelper
             if (values?.Any() != true)
                 throw new ArgumentException($"{name} must be populated");
         }
+
+        public static void AreValuesPopulated(IEnumerable<string> values, string name)
+        {
+            if (values?.Where(x => !string.IsNullOrWhiteSpace(x)).Any() != true)
+                throw new ArgumentException($"{name} must contain at least one valid item");
+        }
     }
 }

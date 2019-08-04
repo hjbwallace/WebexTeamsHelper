@@ -7,7 +7,6 @@ namespace WebexTeamsHelper
 {
     public class WebexTeamsMessageBuilder
     {
-        private const string _lineBreak = "  \n";
         private readonly List<string> _lines = new List<string>();
 
         public WebexTeamsMessageBuilder AddUnorderedList(string prompt, params string[] items)
@@ -33,7 +32,7 @@ namespace WebexTeamsHelper
             _lines.Add(WebexTeamsFormatting.Bold(heading));
 
             if (additionalLineBreak)
-                _lines.Add(_lineBreak);
+                _lines.Add(WebexTeamsFormatting.LineBreak);
 
             return this;
         }
@@ -46,10 +45,10 @@ namespace WebexTeamsHelper
 
         public WebexTeamsMessageBuilder AddCodeBlock(params string[] codeLines)
         {
-            ParameterValidator.IsPopulated(codeLines, "Code block");
-
             if (codeLines?.Any() != true)
                 return this;
+
+            ParameterValidator.AreValuesPopulated(codeLines, "Code block");
 
             _lines.Add("```");
             _lines.AddRange(codeLines);
@@ -74,7 +73,7 @@ namespace WebexTeamsHelper
 
         public WebexTeamsMessageBuilder AddMentionMany(IDictionary<string, string> users)
         {
-            ParameterValidator.IsPopulated(users.Values, "Mention users");
+            ParameterValidator.AreValuesPopulated(users.Values, "Mention users");
 
             var mentions = users.Select(x => GenerateUserMentionLine(x.Key, x.Value));
             var line = string.Join(", ", mentions);
@@ -96,22 +95,22 @@ namespace WebexTeamsHelper
 
         public string Build()
         {
-            ParameterValidator.IsPopulated(_lines, "Lines");
+            ParameterValidator.AreValuesPopulated(_lines, "Lines");
 
-            var markdown = string.Join(_lineBreak, _lines);
+            var markdown = string.Join(WebexTeamsFormatting.LineBreak, _lines);
             return JsonConvert.SerializeObject(new { markdown = markdown });
         }
 
         private WebexTeamsMessageBuilder AddList(string prompt, string[] items, Func<string, string> func)
         {
-            ParameterValidator.IsPopulated(items?.Where(x => !string.IsNullOrWhiteSpace(x)), "Items");
+            ParameterValidator.AreValuesPopulated(items, "Items");
 
             if (!string.IsNullOrWhiteSpace(prompt))
                 AddLine(prompt);
 
             var listItems = items.Where(x => !string.IsNullOrWhiteSpace(x)).Select(func);
 
-            return AddLine(string.Join(Environment.NewLine, listItems) + Environment.NewLine + _lineBreak);
+            return AddLine(string.Join(Environment.NewLine, listItems) + Environment.NewLine + WebexTeamsFormatting.LineBreak);
         }
 
         private string GenerateUserMentionLine(string userName, string nickName)
