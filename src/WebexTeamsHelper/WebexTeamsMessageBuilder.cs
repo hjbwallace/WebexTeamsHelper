@@ -22,24 +22,22 @@ namespace WebexTeamsHelper
         public WebexTeamsMessageBuilder AddQuote(string quote)
         {
             ParameterValidator.IsPopulated(quote, "Quote");
-            return AddLine("> " + quote);
+            return AddLine(WebexTeamsFormatting.Quote(quote));
         }
 
         public WebexTeamsMessageBuilder AddHeading(string heading, bool additionalLineBreak = true)
         {
             ParameterValidator.IsPopulated(heading, "Heading");
 
-            _lines.Add(WebexTeamsFormatting.Bold(heading));
-
-            if (additionalLineBreak)
-                _lines.Add(WebexTeamsFormatting.LineBreak);
-
+            _lines.Add(WebexTeamsFormatting.Bold(heading) + (additionalLineBreak ? WebexTeamsFormatting.LineBreak : ""));
             return this;
         }
 
-        public WebexTeamsMessageBuilder AddLine(params string[] messages)
+        public WebexTeamsMessageBuilder AddLine(params string[] lines)
         {
-            _lines.AddRange(messages);
+            ParameterValidator.AreValuesPopulated(lines, "Lines");
+
+            _lines.AddRange(lines);
             return this;
         }
 
@@ -110,7 +108,7 @@ namespace WebexTeamsHelper
 
             var listItems = items.Where(x => !string.IsNullOrWhiteSpace(x)).Select(func);
 
-            return AddLine(string.Join(Environment.NewLine, listItems) + Environment.NewLine + WebexTeamsFormatting.LineBreak);
+            return AddLine(string.Join(WebexTeamsFormatting.LineBreak, listItems) + WebexTeamsFormatting.LineBreak + WebexTeamsFormatting.LineBreak);
         }
 
         private string GenerateUserMentionLine(string userName, string nickName)
