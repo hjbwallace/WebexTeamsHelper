@@ -3,11 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>WebexTeamsHelper</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.2.0</Version>
     <Authors>Harrison Wallace</Authors>
     <PackageTags>Webex</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/hjbwallace/WebexTeamsHelper</RepositoryUrl>
+    <Description>Tools to build and send messages via a Webex Teams webhook</Description>
   </PropertyGroup>
 
   <ItemGroup>
