@@ -14,7 +14,7 @@ namespace WebexTeamsHelper.Tests
             var expected = "Line with **Bold**, *Italic* and `Inline`.";
 
             AssertPayload(x => x.
-                AddLine($"Line with {boldText}, {italicText} and {inlineText}."),
+                AddLines($"Line with {boldText}, {italicText} and {inlineText}."),
                 expected);
         }
     }

@@ -5,12 +5,19 @@ namespace WebexTeamsHelper.Tests
 {
     public class WebexTeamsMessageBuilderPayloadTests : PayloadTestBase
     {
+        [Fact]
+        public void AddLinesByParts()
+        {
+            AssertPayload(x => x.
+                AddLine("Some message", "made up of", "", WebexTeamsFormatting.Bold("parts")),
+                "Some message made up of **parts**");
+        }
 
         [Fact]
         public void AddMultipleLines()
         {
             AssertPayload(x => x.
-                AddLine("Some line", "Another line"),
+                AddLines("Some line", "Another line"),
                 $"Some line{LineBreak}Another line");
         }
 

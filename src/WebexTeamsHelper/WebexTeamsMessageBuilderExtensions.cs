@@ -7,7 +7,7 @@ namespace WebexTeamsHelper
     {
         public static WebexTeamsMessageBuilder AddLines(this WebexTeamsMessageBuilder builder, IEnumerable<string> lines)
         {
-            return builder.AddLine(lines?.ToArray() ?? new string[0]);
+            return builder.AddLines(lines?.ToArray() ?? new string[0]);
         }
 
         public static WebexTeamsMessageBuilder AddBoldLines(this WebexTeamsMessageBuilder builder, params string[] value)

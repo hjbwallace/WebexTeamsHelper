@@ -10,8 +10,8 @@ namespace WebexTeamsHelper.Tests
 
         protected void AssertPayload(Func<WebexTeamsMessageBuilder, WebexTeamsMessageBuilder> messageBuilderFunc, string markdown)
         {
-            var payload = messageBuilderFunc(new WebexTeamsMessageBuilder()).Build();
-            var expected = JsonConvert.SerializeObject(new { markdown = markdown });
+            var payload = messageBuilderFunc(new WebexTeamsMessageBuilder()).Build().ToString();
+            var expected = new WebexTeamsMessage(markdown).ToString();
 
             Assert.Equal(expected, payload);
         }

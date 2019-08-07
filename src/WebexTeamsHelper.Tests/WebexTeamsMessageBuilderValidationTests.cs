@@ -8,6 +8,13 @@ namespace WebexTeamsHelper.Tests
 
         [Theory]
         [StringValidation]
+        public void ThrowsWhenLinePartIsNullOrEmpty(string linePart)
+        {
+            ThrowsArgumentException(() => _builder.AddLine(linePart));
+        }
+
+        [Theory]
+        [StringValidation]
         public void ThrowsWhenCodeBlockValueIsNullOrEmpty(string codeBlockLine)
         {
             ThrowsArgumentException(() => _builder.AddCodeBlock(codeBlockLine));
