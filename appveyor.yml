@@ -4,6 +4,7 @@ pull_requests:
 branches:
   only:
   - master
+image: Visual Studio 2019
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
@@ -13,7 +14,7 @@ dotnet_csproj:
   file_version: '{version}'
   informational_version: '{version}'
 build:
-  project: /src/
+  project: .\src\
   verbosity: minimal
 deploy:
 - provider: NuGet
