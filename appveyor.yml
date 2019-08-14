@@ -13,9 +13,21 @@ dotnet_csproj:
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
-build:
-  project: .\src\
-  verbosity: minimal
+nuget:
+  disable_publish_on_pr: true
+build_script:
+- ps: >-
+    dotnet restore .\src\;
+    dotnet build .\src\WebexTeamsHelper.sln -v quiet;
+    dotnet publish .\src\;
+    dotnet pack .\src\;
+test_script:
+- ps: >-
+    $ErrorActionPreference = "Stop";
+    dotnet test .\src\ --no-build --no-restore -v quiet;
+artifacts:
+- path: .\src\**\*.nupkg
+  name: NuGet
 deploy:
 - provider: NuGet
   api_key:
