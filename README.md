@@ -1,6 +1,9 @@
 # WebexTeamsHelper
 Tools to build and send messages via a Webex Teams webhook
 
+[![Build status](https://ci.appveyor.com/api/projects/status/y827com47vmmc66e?svg=true)](https://ci.appveyor.com/project/hjbwallace/webexteamshelper)
+[![NuGet](https://img.shields.io/nuget/v/WebexTeamsHelper.svg)](https://www.nuget.org/packages/WebexTeamsHelper/)
+
 ## Message Builder
 
 Create a message that can be sent to Webex Teams via a webhook using the `WebexTeamsMessageBuilder`. Builder returns a `WebexTeamsMessage` object which represents the json payload that is sent as a message to Webex Teams via a webhook.
